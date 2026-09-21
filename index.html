@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#1e40af" />
+  <meta name="description" content="Transformation Master AI – Master Transformation of Sentences for West Bengal Board (Classes V–XII). Bilingual English + Bengali." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Transformation Master AI</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-top">
+      <div class="logo">
+        <span>🔄</span>
+        <div>
+          <div>Transformation Master</div>
+          <div class="subtitle">Learn • Practise • Transform • Excel</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="bn">বাং</button>
+          <button class="lang-btn" data-lang="both">Both</button>
+        </div>
+        <button class="icon-btn" id="themeToggle" title="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- DASHBOARD -->
+    <section id="view-dashboard" class="view active">
+      <div class="stats-row">
+        <div class="stat-card"><div class="number" id="statAttempted">0</div><div class="label">Attempted</div></div>
+        <div class="stat-card"><div class="number" id="statCorrect">0</div><div class="label">Correct</div></div>
+        <div class="stat-card"><div class="number" id="statAccuracy">0%</div><div class="label">Accuracy</div></div>
+      </div>
+      <div class="dashboard-grid">
+        <div class="dash-card" data-view="lessons"><div class="icon">📚</div><h3>Learn</h3><p>Rules & Examples</p></div>
+        <div class="dash-card" data-view="practice"><div class="icon">✍️</div><h3>Practice</h3><p>Transform Sentences</p></div>
+        <div class="dash-card" data-view="quiz"><div class="icon">🎯</div><h3>Smart Quiz</h3><p>Test Yourself</p></div>
+        <div class="dash-card" data-view="bank"><div class="icon">📝</div><h3>Question Bank</h3><p>All Exercises</p></div>
+        <div class="dash-card" data-view="progress"><div class="icon">📊</div><h3>My Progress</h3><p>Track Learning</p></div>
+        <div class="dash-card" data-view="teacher"><div class="icon">👨‍🏫</div><h3>Teacher Zone</h3><p>Paper Generator</p></div>
+      </div>
+      <h2 class="section-title">📌 Quick Topics</h2>
+      <div class="filters" id="topicChips"></div>
+    </section>
+
+    <!-- LESSONS -->
+    <section id="view-lessons" class="view">
+      <button class="back-btn" data-back="dashboard">← Back to Dashboard</button>
+      <h2 class="section-title">📚 Transformation Lessons</h2>
+      <div class="lesson-list" id="lessonList"></div>
+    </section>
+
+    <!-- LESSON DETAIL -->
+    <section id="view-lesson-detail" class="view">
+      <button class="back-btn" data-back="lessons">← Back to Lessons</button>
+      <div id="lessonContent" class="lesson-detail"></div>
+    </section>
+
+    <!-- PRACTICE -->
+    <section id="view-practice" class="view">
+      <button class="back-btn" data-back="dashboard">← Back</button>
+      <h2 class="section-title">✍️ Practice Mode</h2>
+      <div class="filters" id="practiceFilters">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="Degree of Comparison">Degree</button>
+        <button class="chip" data-filter="Affirmative ↔ Negative">Aff ↔ Neg</button>
+        <button class="chip" data-filter="Exclamatory ↔ Assertive">Excl ↔ Ass</button>
+        <button class="chip" data-filter="Interrogative ↔ Assertive">Int ↔ Ass</button>
+        <button class="chip" data-filter="Simple ↔ Complex">Simple/Complex</button>
+      </div>
+      <div class="practice-box" id="practiceBox">
+        <div class="question-text" id="qText">Loading question...</div>
+        <div class="question-bn bn" id="qBn"></div>
+        <div class="instruction" id="qInstruction"></div>
+        <input type="text" class="answer-input" id="answerInput" placeholder="Type your transformed sentence here..." autocomplete="off" />
+        <div class="btn-group">
+          <button class="btn btn-primary" id="checkBtn">Check Answer</button>
+          <button class="btn btn-outline" id="hintBtn">Hint</button>
+          <button class="btn btn-outline" id="nextBtn">Next →</button>
+          <button class="btn btn-outline" id="showAnsBtn">Show Answer</button>
+        </div>
+        <div class="feedback" id="feedback"></div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="view-quiz" class="view">
+      <button class="back-btn" data-back="dashboard">← Back</button>
+      <h2 class="section-title">🎯 Smart Quiz</h2>
+      <div class="practice-box">
+        <p style="margin-bottom:1rem;color:var(--text-muted)">Select number of questions and start a timed practice set.</p>
+        <div class="btn-group">
+          <button class="btn btn-primary" data-quiz="5">5 Questions</button>
+          <button class="btn btn-primary" data-quiz="10">10 Questions</button>
+          <button class="btn btn-primary" data-quiz="15">15 Questions</button>
+        </div>
+        <div id="quizArea" style="margin-top:1.5rem;display:none;"></div>
+      </div>
+    </section>
+
+    <!-- QUESTION BANK -->
+    <section id="view-bank" class="view">
+      <button class="back-btn" data-back="dashboard">← Back</button>
+      <h2 class="section-title">📝 Question Bank</h2>
+      <p style="color:var(--text-muted);margin-bottom:1rem">All questions extracted from textbook Exercises 71–81 & miscellaneous sets.</p>
+      <div id="bankList" class="lesson-list"></div>
+    </section>
+
+    <!-- PROGRESS -->
+    <section id="view-progress" class="view">
+      <button class="back-btn" data-back="dashboard">← Back</button>
+      <h2 class="section-title">📊 My Progress</h2>
+      <div class="stats-row">
+        <div class="stat-card"><div class="number" id="pAttempted">0</div><div class="label">Attempted</div></div>
+        <div class="stat-card"><div class="number" id="pCorrect">0</div><div class="label">Correct</div></div>
+        <div class="stat-card"><div class="number" id="pAccuracy">0%</div><div class="label">Accuracy</div></div>
+      </div>
+      <div class="practice-box">
+        <h3 style="margin-bottom:0.75rem">Topic-wise Performance</h3>
+        <div id="topicStats"></div>
+        <button class="btn btn-outline" id="resetProgress" style="margin-top:1rem">Reset Progress</button>
+      </div>
+    </section>
+
+    <!-- TEACHER ZONE -->
+    <section id="view-teacher" class="view">
+      <button class="back-btn" data-back="dashboard">← Back</button>
+      <h2 class="section-title">👨‍🏫 Teacher Zone</h2>
+      <div class="practice-box">
+        <h3>Question Paper Generator</h3>
+        <p style="color:var(--text-muted);margin:0.5rem 0 1rem">Generate a printable set of transformation questions.</p>
+        <label style="display:block;margin-bottom:0.3rem;font-weight:600">Number of Questions</label>
+        <select id="paperCount" style="width:100%;padding:0.6rem;border-radius:8px;border:1px solid var(--border);margin-bottom:1rem;background:var(--bg);color:var(--text)">
+          <option value="5">5 Questions</option>
+          <option value="10" selected>10 Questions</option>
+          <option value="15">15 Questions</option>
+          <option value="20">20 Questions</option>
+        </select>
+        <label style="display:block;margin-bottom:0.3rem;font-weight:600">Topic Filter</label>
+        <select id="paperTopic" style="width:100%;padding:0.6rem;border-radius:8px;border:1px solid var(--border);margin-bottom:1rem;background:var(--bg);color:var(--text)">
+          <option value="all">All Topics</option>
+          <option value="Degree of Comparison">Degree of Comparison</option>
+          <option value="Affirmative ↔ Negative">Affirmative ↔ Negative</option>
+          <option value="Exclamatory ↔ Assertive">Exclamatory ↔ Assertive</option>
+          <option value="Interrogative ↔ Assertive">Interrogative ↔ Assertive</option>
+          <option value="Simple ↔ Complex">Simple ↔ Complex</option>
+        </select>
+        <div class="btn-group">
+          <button class="btn btn-primary" id="generatePaper">Generate Paper</button>
+          <button class="btn btn-outline" id="printPaper">Print / Save PDF</button>
+        </div>
+        <div id="paperPreview" style="margin-top:1.5rem;display:none;"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-items">
+      <button class="nav-item active" data-view="dashboard"><span class="nav-icon">🏠</span>Home</button>
+      <button class="nav-item" data-view="lessons"><span class="nav-icon">📚</span>Learn</button>
+      <button class="nav-item" data-view="practice"><span class="nav-icon">✍️</span>Practice</button>
+      <button class="nav-item" data-view="quiz"><span class="nav-icon">🎯</span>Quiz</button>
+      <button class="nav-item" data-view="progress"><span class="nav-icon">📊</span>Progress</button>
+    </div>
+  </nav>
+
+  <script src="data/patterns.js"></script>
+  <script src="data/lessons.js"></script>
+  <script src="data/questions.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
